@@ -60,14 +60,14 @@ class HangpersonApp < Sinatra::Base
     if status == :play
       erb :show # You may change/remove this line
     else
-      erb @game.check_win_or_lose
+      redirect '/' + @game.check_win_or_lose.to_s, 303
     end
   end
   
   get '/win' do
     status = @game.check_win_or_lose
-    if status == :play
-      erb :show # You may change/remove this line
+    if status == nil || status == :play
+      redirect '/show', 303
     else
       erb @game.check_win_or_lose
     end
@@ -75,8 +75,8 @@ class HangpersonApp < Sinatra::Base
   
   get '/lose' do
     status = @game.check_win_or_lose
-    if status == :play
-      erb :show # You may change/remove this line
+    if status == nil || status == :play
+      redirect '/show', 303
     else
       erb @game.check_win_or_lose
     end
